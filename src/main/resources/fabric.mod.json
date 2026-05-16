@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "fake-elytra",
+	"version": "${version}",
+	"name": "Fake Elytra",
+	"description": "",
+	"authors": [
+		"Society"
+	],
+	"contact": {
+
+		"sources": "https://discord.gg/Aqz3U88xBB"
+	},
+	"license": "CC0-1.0",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"nevercry.larp.FakeElytra"
+		]
+	},
+	"mixins": [
+		"fake-elytra.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
