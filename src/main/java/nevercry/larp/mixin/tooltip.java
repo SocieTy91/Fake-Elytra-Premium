@@ -19,6 +19,16 @@ import java.util.List;
 @Mixin(ItemStack.class)
 public class tooltip {
 
+    @Inject(method = "getName", at = @At("RETURN"), cancellable = true)
+    private void customName(CallbackInfoReturnable<Text> cir) {
+        ItemStack self = (ItemStack)(Object)this;
+        if (!self.isOf(Items.COPPER_CHESTPLATE)) return;
+        cir.setReturnValue(
+                Text.literal("Elytra")
+                        .formatted(Formatting.LIGHT_PURPLE)
+        );
+    }
+
     @Inject(method = "getTooltip", at = @At("RETURN"), cancellable = true)
     private void customTooltip(
             Item.TooltipContext context,
@@ -26,20 +36,16 @@ public class tooltip {
             TooltipType type,
             CallbackInfoReturnable<List<Text>> cir
     ) {
-
         ItemStack self = (ItemStack)(Object)this;
-
         if (!self.isOf(Items.COPPER_CHESTPLATE)) return;
 
         List<Text> tooltip = new ArrayList<>();
-
         tooltip.add(
                 Text.literal("Elytra")
-                        .styled(style -> style.withColor(0xFC54FC))
+                        .formatted(Formatting.LIGHT_PURPLE)
         );
         tooltip.add(Text.literal("Unbreaking III")
                 .formatted(Formatting.GRAY));
-
         tooltip.add(Text.literal("Mending")
                 .formatted(Formatting.GRAY));
         tooltip.add(
@@ -51,17 +57,12 @@ public class tooltip {
                         )
         );
 
-
-
-
         cir.setReturnValue(tooltip);
     }
 
     @Inject(method = "hasGlint", at = @At("HEAD"), cancellable = true)
     private void alwaysGlint(CallbackInfoReturnable<Boolean> cir) {
-
         ItemStack self = (ItemStack)(Object)this;
-
         if (self.isOf(Items.COPPER_CHESTPLATE)) {
             cir.setReturnValue(true);
         }
